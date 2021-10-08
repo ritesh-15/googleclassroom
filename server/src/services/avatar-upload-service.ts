@@ -2,7 +2,10 @@ import Jimp from "jimp";
 import crypto from "crypto";
 import path from "path";
 
-const uploadAvatar = async (avatar: string): Promise<string | null> => {
+const uploadAvatar = async (
+  avatar: string,
+  size: number
+): Promise<string | null> => {
   const buffer = Buffer.from(
     avatar.replace(/^data.image\/(png|jpeg|jpg);base64,/, ""),
     "base64"
@@ -12,10 +15,9 @@ const uploadAvatar = async (avatar: string): Promise<string | null> => {
 
   try {
     const jimResp = await Jimp.read(buffer);
-    jimResp.resize(150, Jimp.AUTO).write(path.resolve(`./storage/${imgPath}`));
+    jimResp.resize(size, Jimp.AUTO).write(path.resolve(`./storage/${imgPath}`));
     return imgPath;
   } catch (err) {
-    console.log(err);
     return null;
   }
 };

@@ -6,6 +6,10 @@ import userMiddleware from "../middlewares/user-middleware";
 
 const router = Router();
 
-router.post("/v/new-class", userMiddleware, classController.newClass);
+router.post("/c/new-class", userMiddleware, classController.newClass);
+
+router.get("/c/get/details/:id", userMiddleware, classController.getDetails);
+
+router.post("/c/upload/banner", userMiddleware, classController.uploadBanner);
 
 export default router;

@@ -16,7 +16,7 @@ class AuthController {
 
     const hashedPass = await hashPass(password);
 
-    const imagePath = await uploadAvatar(avatar);
+    const imagePath = await uploadAvatar(avatar, 150);
 
     if (!imagePath)
       return res

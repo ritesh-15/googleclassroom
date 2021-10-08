@@ -50,11 +50,14 @@ const CreateClass: FC<CreateClass> = ({ setOpen }) => {
           Cancel
         </Button>
         <Button
-          disabled={!variables.className ? true : false}
+          disabled={!variables.className || variables.loading ? true : false}
           width="fit-content"
           color="var(--blue)"
           bg="transparent"
-          onClick={functions.create}
+          onClick={async () => {
+            const result = await functions.create();
+            if (result) setOpen(false);
+          }}
         >
           Create
         </Button>

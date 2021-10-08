@@ -6,7 +6,7 @@ interface props {
 
 export const StyledInput = styled.div<props>`
   position: relative;
-  height: 60px;
+  height: 55px;
   width: 100%;
   background: ${({ variant }) => (variant ? "var(--bg-grey)" : "transparent")};
 
@@ -15,7 +15,7 @@ export const StyledInput = styled.div<props>`
     height: 100%;
     width: 100%;
     outline: none;
-    padding-top: 15px;
+    padding-top: 10px;
     padding-left: 10px;
     background: ${({ variant }) =>
       variant ? "var(--bg-grey)" : "transparent"};
@@ -32,8 +32,8 @@ export const StyledInput = styled.div<props>`
 
     span {
       transform: ${({ variant }) =>
-        variant ? "translateY(-100%)" : "translateY(-170%)"};
-      font-size: 0.7em;
+        variant ? "translateY(-100%)" : "translateY(-180%)"};
+      font-size: 0.8em;
       color: var(--blue);
       z-index: 200;
       background: ${({ variant }) => (variant ? "transparent" : "#fff")};
@@ -67,7 +67,7 @@ export const StyledInput = styled.div<props>`
       position: absolute;
       left: 10px;
       color: var(--text);
-      bottom: 20px;
+      bottom: 17px;
       transition: all 200ms ease-in;
       font-size: 1em;
     }

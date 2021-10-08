@@ -34,6 +34,12 @@ export const CardTop = styled.div<cardTop>`
     margin-bottom: 2rem;
     align-items: center;
 
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     h1 {
       font-size: 1.4em;
       text-overflow: ellipsis;

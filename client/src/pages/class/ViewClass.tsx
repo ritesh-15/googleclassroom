@@ -1,13 +1,25 @@
+import useViewClass from "./useViewClass";
 import { StyledClass, Image } from "./ViewClass.styled";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
 const ViewClass = () => {
+  const { variables, functions } = useViewClass();
+
   return (
     <StyledClass>
-      <Image bg="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGNsYXNzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60">
-        <h1>Lorem ipsum dolor sit amet.</h1>
+      <Image bg={variables.classRoom?.banner && variables.classRoom?.banner}>
+        <h1>{variables.classRoom?.className}</h1>
         <div>
           <p>Class code : </p>
-          <span>446efer3d</span>
+          <span></span>
+          {variables.classRoom?.code}{" "}
+          <FullscreenIcon style={{ marginLeft: "10px", cursor: "pointer" }} />
+        </div>
+        <div>
+          <input onChange={functions.changeBanner} id="image" type="file" />
+          <label htmlFor="image">
+            <p>Upload image</p>
+          </label>
         </div>
       </Image>
     </StyledClass>

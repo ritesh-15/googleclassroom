@@ -13,17 +13,41 @@ interface imageProps {
 
 export const Image = styled.div<imageProps>`
   width: 100%;
-  height: 250px;
+  height: 240px;
   padding: 1rem;
   position: relative;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.4);
+  background: ${({ bg }) => (!bg ? "var(--blue)" : "transparent")};
   color: #fff;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    margin-top: 90px;
+  }
 
   div {
     display: flex;
     align-items: center;
     margin-top: 1rem;
+
+    &:last-child {
+      margin-left: auto;
+      width: 100%;
+      text-align: right;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      input {
+        display: none;
+      }
+
+      p {
+        cursor: pointer;
+        font-size: 0.9em;
+        margin-right: 1rem;
+      }
+    }
 
     span {
       margin-left: 5px;

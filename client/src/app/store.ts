@@ -3,6 +3,8 @@ import userSlice from "../reducers/user/userSlice";
 import messageSlice from "../reducers/message/messageSlice";
 import registerSlice from "../reducers/register/registerSlice";
 import modalSlice from "../reducers/modal/modalSlice";
+import detailsSlice from "../reducers/classDetailsSlice/detailsSlice";
+import progressSlice from "../reducers/progress/progressSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
     message: messageSlice,
     register: registerSlice,
     modal: modalSlice,
+    classDetails: detailsSlice,
+    progress: progressSlice,
   },
 });
 

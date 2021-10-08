@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react";
+import { useHistory } from "react-router";
 import { createNewClass } from "../../api/class/class.api";
 import MessageHelper from "../../helpers/message/MessageHelper";
 
@@ -9,6 +10,9 @@ const useCreateClass = () => {
   const [room, setRoom] = useState("");
   const [subject, setSubject] = useState("");
   const { changeMessage } = MessageHelper();
+  const [loading, setLoading] = useState(false);
+
+  const history = useHistory();
 
   // change the class name
 
@@ -32,8 +36,8 @@ const useCreateClass = () => {
     setSubject("");
   };
 
-  const create = async () => {
-    if (!className) return;
+  const create = async (): Promise<boolean> => {
+    if (!className) return false;
 
     const requestData = {
       className,
@@ -42,11 +46,18 @@ const useCreateClass = () => {
       section,
     };
 
+    setLoading(true);
+
     try {
       const { data } = await createNewClass(requestData);
+      history.push(`/v/c/${data.createdClass._id}`);
       clear();
+      setLoading(false);
+      return true;
     } catch (err) {
+      setLoading(false);
       changeMessage("Something went wrong, please try again !", "error");
+      return false;
     }
   };
 
@@ -56,6 +67,7 @@ const useCreateClass = () => {
       room,
       subject,
       section,
+      loading,
     },
     functions: {
       changeClassName,

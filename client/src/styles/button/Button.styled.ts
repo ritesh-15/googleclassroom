@@ -29,7 +29,7 @@ const Button = styled.button<props>`
   &:disabled {
     background: hsl(215, 4%, 81%);
     background: ${({ bg }) => bg || "hsl(215, 4%, 81%)"};
-    color: hsl(215, 4%, 81%);
+    color: ${({ bg }) => (bg ? " hsl(215, 4%, 81%)" : "#fff")};
     cursor: default;
   }
 `;
