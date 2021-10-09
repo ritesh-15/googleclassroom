@@ -15,6 +15,6 @@ router.get("/v/refresh", authController.refresh);
 // Log out route
 // Create a middleware to verify the user and then log out the user
 
-router.post("/v/logout", userMiddleware, authController.logOut);
+router.delete("/v/logout", userMiddleware, authController.logOut);
 
 export default router;

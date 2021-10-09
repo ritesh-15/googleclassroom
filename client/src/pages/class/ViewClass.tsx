@@ -17,9 +17,11 @@ const ViewClass = () => {
         </div>
         <div>
           <input onChange={functions.changeBanner} id="image" type="file" />
-          <label htmlFor="image">
-            <p>Upload image</p>
-          </label>
+          {functions.isCreator() && (
+            <label htmlFor="image">
+              <p>Upload image</p>
+            </label>
+          )}
         </div>
       </Image>
     </StyledClass>

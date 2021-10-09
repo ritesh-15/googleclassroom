@@ -12,4 +12,20 @@ router.get("/c/get/details/:id", userMiddleware, classController.getDetails);
 
 router.post("/c/upload/banner", userMiddleware, classController.uploadBanner);
 
+router.post("/c/join-class", userMiddleware, classController.joinClass);
+
+router.get(
+  "/c/get-joined-classes",
+  userMiddleware,
+  classController.getJoinedClasses
+);
+
+router.get(
+  "/c/get-created-classes",
+  userMiddleware,
+  classController.getCreatedClasses
+);
+
+router.get("/c/peoples/:id", userMiddleware, classController.getPeoples);
+
 export default router;

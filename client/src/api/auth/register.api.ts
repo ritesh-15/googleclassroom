@@ -6,6 +6,6 @@ export const checkUser = (email: string) => api.get(`/user/${email}`);
 
 // log out route
 
-export const logout = () => api.post("/v/logout");
+export const logout = () => api.delete("/v/logout");
 
 export default newRegister;

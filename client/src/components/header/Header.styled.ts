@@ -12,6 +12,7 @@ export const StyledHeader = styled.div`
   top: 0 !important;
   left: 0;
   right: 0;
+  height: 61px;
   z-index: 100;
   background: #fff;
 
@@ -29,18 +30,13 @@ export const HeaderLeft = styled.div`
       display: flex;
       align-items: center;
       h1 {
-        font-size: 0.9em;
+        font-size: 1.2em;
         margin-left: 5px;
         max-width: 150px;
         height: fit-content;
         max-height: 40px;
         text-overflow: ellipsis;
         overflow: hidden;
-      }
-
-      &:hover {
-        text-decoration: underline;
-        color: var(--blue);
       }
     }
 

@@ -6,12 +6,14 @@ const UserHelper = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
 
-  const changeUser = (userData: {
-    name: string;
-    email: string;
-    avatar: string;
-    _id: string;
-  }) => {
+  const changeUser = (
+    userData: {
+      name: string;
+      email: string;
+      avatar: string;
+      _id: string;
+    } | null
+  ) => {
     dispatch(setUser(userData));
   };
 

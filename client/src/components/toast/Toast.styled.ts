@@ -16,6 +16,7 @@ export const StyledToast = styled.div<props>`
 export const ToastBody = styled.div`
   width: fit-content;
   max-width: 400px;
+  z-index: 500;
   height: fit-content;
   padding: 1rem;
   background: hsl(4, 1%, 14%);

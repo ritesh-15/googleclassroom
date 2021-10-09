@@ -7,7 +7,7 @@ interface ProgressProps {
 
 const ProgressDiv = styled.div<ProgressProps>`
   width: 100%;
-  height: 5px;
+  height: 4px;
   background: hsl(214.08, 100%, 75.49019607843137%);
   opacity: ${({ show }) => (show ? "1" : "0")};
 

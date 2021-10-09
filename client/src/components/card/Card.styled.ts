@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface cardTop {
-  bg: string;
+  bg?: string;
 }
 
 export const StyledCard = styled.div`
@@ -20,9 +20,22 @@ export const StyledCard = styled.div`
 `;
 
 export const CardTop = styled.div<cardTop>`
-  background: url(${({ bg }) => bg}) no-repeat center center/cover;
+  background: ${({ bg }) => (!bg ? "var(--blue)" : "transparent")};
   color: #fff;
   padding: 1rem;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: url(${({ bg }) => bg}) no-repeat center center/cover;
+  }
 
   h4 {
     font-size: 0.9em;
@@ -45,6 +58,7 @@ export const CardTop = styled.div<cardTop>`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      width: 90%;
     }
   }
 `;

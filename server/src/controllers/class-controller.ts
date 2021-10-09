@@ -4,6 +4,12 @@ import generateClassCode from "../helpers/classCode/genrateClassCode";
 import { ClassInformation } from "../models/class-modal";
 import uploadAvatar from "../services/avatar-upload-service";
 import fs from "fs";
+import userService from "../database/user-service";
+import UserDto from "../dtos/user-dto";
+import { ObjectId } from "mongoose";
+import UserInterface from "../interfaces/user/user-interface";
+import crypto from "crypto";
+import PeopleDto from "../dtos/people-dto";
 
 class ClassController {
   async newClass(req: Request, res: Response) {
@@ -15,7 +21,7 @@ class ClassController {
 
     // generate unique class code
 
-    const code = generateClassCode(7);
+    const code = crypto.randomBytes(5).toString("hex");
 
     const data = {
       className,
@@ -129,6 +135,140 @@ class ClassController {
     // send the url of the banner to the user
 
     return res.json({ fileUrl });
+  }
+
+  async joinClass(req: Request, res: Response) {
+    // get the class id from the body
+    const { classCode, user } = req.body;
+    // verify the class id
+
+    if (!classCode) return res.status(400).json({ message: "Bad request!" });
+
+    // find the class with this class id in the database
+
+    let classRoom;
+
+    try {
+      classRoom = await classService.getClass({ code: classCode });
+    } catch (err) {
+      return res.status(500).json({ message: "Database error!" });
+    }
+
+    // if not found send status 404
+
+    if (!classRoom)
+      return res.status(404).json({ message: "No class room found!" });
+
+    // create new joined class with this class id and user id
+
+    let joinedClass;
+
+    try {
+      joinedClass = await classService.joinClass({
+        classId: classRoom._id,
+        userId: user._id,
+        creatorUserInfo: classRoom.userId,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: "Database error!" });
+    }
+
+    // verify the joined class
+
+    if (!joinedClass)
+      return res.status(500).json({ message: "Something went wrong!" });
+
+    // send the responce to the user
+
+    return res.json({ joinedClass, joined: true });
+  }
+
+  async getJoinedClasses(req: Request, res: Response) {
+    // get the joined classes by the user
+
+    const { user } = req.body;
+
+    let joinedClasses;
+
+    try {
+      joinedClasses = await classService.getJoinedClasses({ userId: user._id });
+    } catch (err) {
+      return res.status(500).json({ message: "database error" });
+    }
+
+    if (!joinedClasses)
+      return res.status(404).json({ msg: "No joned classes found!" });
+
+    return res.json({ joinedClasses });
+  }
+
+  async getCreatedClasses(req: Request, res: Response) {
+    const { user } = req.body;
+    // get the created classes from the database
+
+    let createdClasses;
+
+    try {
+      createdClasses = await classService.getAllCreatedClasses({
+        userId: user._id,
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: "database error" });
+    }
+
+    if (!createdClasses)
+      return res.status(404).json({ message: "no classes found!" });
+
+    // send the found classes
+
+    return res.json({ createdClasses });
+  }
+
+  async getPeoples(req: Request, res: Response) {
+    // get the class id from the get
+    const { id } = req.params;
+    // verify the class id
+
+    if (!id) return res.status(400).json({ msg: "bad request!" });
+
+    // find the class
+
+    let classRoom;
+
+    try {
+      classRoom = await classService.getClass({ _id: id });
+    } catch (err) {
+      return res.status(500).json({ msg: "db error" });
+    }
+
+    if (!classRoom) return res.status(404).json({ msg: "No classroom found!" });
+
+    // get the joined class user from db
+
+    let peoples;
+
+    try {
+      peoples = await classService.getJoinedClasses({
+        classId: classRoom._id,
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: "db error" });
+    }
+
+    if (!peoples) return res.status(400).json({ msg: "No user found!" });
+
+    // send only neccesaryy data
+
+    let foundPeoples: { name: string; avatar: string }[] = [];
+
+    peoples.forEach((people) => {
+      const person = new PeopleDto(people.userId);
+      foundPeoples.push(person);
+    });
+
+    // send the responce
+
+    return res.json({ peoples: foundPeoples, count: foundPeoples.length });
   }
 }
 

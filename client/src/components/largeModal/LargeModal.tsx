@@ -5,24 +5,15 @@ import {
   LargeModalHead,
   StyledLargeModal,
 } from "./LargeModal.styled";
-import Button from "../../styles/button/Button.styled";
 
 interface LargeModal {
   open: boolean;
-  setOpen(val: boolean): void;
   children: ReactElement;
 }
 
-const LargeModal: FC<LargeModal> = ({ open, setOpen, children }) => {
+const LargeModal: FC<LargeModal> = ({ open, children }) => {
   return (
     <StyledLargeModal open={open}>
-      <LargeModalHead>
-        <div>
-          <CloseOutlined onClick={() => setOpen(false)} className="icon" />
-          <h1>Join class</h1>
-        </div>
-        <Button width="100px">Join</Button>
-      </LargeModalHead>
       <LargeModalBody>{children}</LargeModalBody>
     </StyledLargeModal>
   );

@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import Progress from "../progress/Progress";
 import LargeModal from "../largeModal/LargeModal";
 import JoinClass from "../joinClass/JoinClass";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { logout } from "../../api/auth/register.api";
 
 const Header = () => {
   const { user } = UserHelper();
@@ -18,33 +20,32 @@ const Header = () => {
   const { classRoom } = ClassDetailsHelper();
   const url = window.location.pathname;
   const [largeModalState, setLargeModalState] = useState(false);
+  const { changeUser } = UserHelper();
+
+  const logOut = async () => {
+    try {
+      await logout();
+      changeUser(null);
+    } catch (err) {}
+  };
 
   return (
     <>
       <StyledHeader>
-        <LargeModal open={largeModalState} setOpen={setLargeModalState}>
-          <JoinClass />
+        <LargeModal open={largeModalState}>
+          <JoinClass setOpen={setLargeModalState} />
         </LargeModal>
 
         <HeaderLeft>
           <Menu />
           <div>
-            {!classRoom?.className || url === "/" ? (
-              <Link to="/">
-                <img
-                  src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
-                  alt=""
-                />
-                <h1>Classroom</h1>
-              </Link>
-            ) : (
-              <Link to={`/v/c/${classRoom?._id}`}>
-                <h1>
-                  {classRoom?.className} Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Aspernatur, quos.
-                </h1>
-              </Link>
-            )}
+            <Link to="/">
+              <img
+                src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
+                alt=""
+              />
+              <h1>Classroom</h1>
+            </Link>
           </div>
         </HeaderLeft>
         {url !== "/" && <Tabs />}
@@ -57,6 +58,9 @@ const Header = () => {
           </div>
           <div>
             <CreateIcon onClick={() => setModalState(true)} className="icon" />
+          </div>
+          <div>
+            <LogoutIcon onClick={logOut} className="icon" />
           </div>
           <div>
             <img src={user?.avatar} alt="" />

@@ -10,6 +10,7 @@ const Avatar = styled.div<props>`
   height: ${({ height }) => (height ? height : "50px")};
   border-radius: 50%;
   overflow: hidden;
+  padding: 0 !important;
   z-index: 20;
 
   img {
