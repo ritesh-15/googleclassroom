@@ -58,7 +58,7 @@ export const CardTop = styled.div<cardTop>`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      width: 90%;
+      width: 70%;
     }
   }
 `;

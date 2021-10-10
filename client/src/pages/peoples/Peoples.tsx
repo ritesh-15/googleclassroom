@@ -24,7 +24,7 @@ const Peoples = () => {
         {/* map the persons */}
 
         {variables.peoples.map((p) => (
-          <Person>
+          <Person key={p.avatar}>
             <Avatar height="40px" width="40px">
               <img src={p.avatar} alt="" />
             </Avatar>

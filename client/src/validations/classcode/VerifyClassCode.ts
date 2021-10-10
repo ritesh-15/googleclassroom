@@ -1,6 +1,6 @@
 const VerifyClassCode = () => {
   const verifyCode = (code: string): boolean => {
-    const regx = /^([0-9a-z]){10}$/;
+    const regx = /^([a-z0-9]){10}$/;
 
     return regx.test(code);
   };

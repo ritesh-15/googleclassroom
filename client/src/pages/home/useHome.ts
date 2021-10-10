@@ -43,6 +43,7 @@ const useHome = () => {
   const [joinedClasses, setJoinedClasses] = useState<joinedClass[]>([]);
   const [createdClasses, setCreatedClasses] = useState<creadClass[]>([]);
   const { changeProgressState } = ProgressHelper();
+  const [unMounted, setUnMounted] = useState(false);
 
   useEffect(() => {
     // get the joined classes
@@ -50,12 +51,18 @@ const useHome = () => {
     (async () => {
       try {
         const { data } = <any>await getJoinedClasses();
-        setJoinedClasses(data.joinedClasses);
+        if (!unMounted) {
+          setJoinedClasses(data.joinedClasses);
+        }
         changeProgressState(false);
       } catch (err) {
         changeProgressState(false);
       }
     })();
+
+    return () => {
+      setUnMounted(true);
+    };
   }, []);
 
   useEffect(() => {
@@ -64,7 +71,9 @@ const useHome = () => {
     (async () => {
       try {
         const { data } = <any>await getCreatedClasses();
-        setCreatedClasses(data.createdClasses);
+        if (!unMounted) {
+          setCreatedClasses(data.createdClasses);
+        }
         changeProgressState(false);
       } catch (err) {
         changeProgressState(false);

@@ -5,6 +5,7 @@ import registerSlice from "../reducers/register/registerSlice";
 import modalSlice from "../reducers/modal/modalSlice";
 import detailsSlice from "../reducers/classDetailsSlice/detailsSlice";
 import progressSlice from "../reducers/progress/progressSlice";
+import newMaterilaSlice from "../reducers/new-material/new-materila-slice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     modal: modalSlice,
     classDetails: detailsSlice,
     progress: progressSlice,
+    newMaterial: newMaterilaSlice,
   },
 });
 

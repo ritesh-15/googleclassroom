@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import authRoutes from "./router/auth-routes";
 import classRoutes from "./router/class-router";
+import materialRoutes from "./router/material-router";
 import { config } from "dotenv";
 import connection from "./db";
 import cookieParser from "cookie-parser";
@@ -35,5 +36,6 @@ connection();
 
 app.use("/api", authRoutes);
 app.use("/api", classRoutes);
+app.use("/api/m", materialRoutes);
 
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));

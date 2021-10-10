@@ -3,27 +3,35 @@ import styled from "styled-components";
 interface props {
   bg?: string;
   color?: string;
-  border?: boolean;
+  border?: string;
   width?: string;
   hover?: boolean;
+  radius?: string;
+  height?: string;
+  flex?: boolean;
+  hoverColor?: string;
 }
 
 const Button = styled.button<props>`
   padding: 0.7rem 1rem;
   background: ${({ bg }) => bg || "var(--blue)"};
   outline: none;
-  border: none;
+  border: ${({ border }) => border || "none"};
   font-size: 1em;
   cursor: pointer;
   color: ${({ color }) => color || "#fff"};
-  border-radius: 4px;
+  border-radius: ${({ radius }) => radius || "4px"};
   width: ${({ width }) => width || "100%"};
-  display: block;
+  display: ${({ flex }) => (flex ? "flex" : "block")};
   transition: background 160ms ease-in;
+  height: ${({ height }) => height};
+  align-items: ${({ flex }) => flex && "center"};
+  justify-content: ${({ flex }) => flex && "center"};
 
   &:hover {
     background: ${({ hover, bg }) =>
       hover ? "hsl(215, 78%, 55%)" : bg || "var(--blue)"};
+    color: ${({ hoverColor }) => hoverColor || "#fff"};
   }
 
   &:disabled {
