@@ -24,13 +24,20 @@ const Classwork = () => {
           <LModalHeader>
             <div>
               <CloseOutlined
-                onClick={() => functions.setMaterialOpenState(false)}
+                onClick={() => {
+                  functions.setMaterialOpenState(false);
+                  functions.clear();
+                }}
                 className="icon"
               />
               <h1>New material</h1>
             </div>
-            <Button onClick={functions.newMaterial} width="100px">
-              Post
+            <Button
+              disabled={variables.posting ? true : false}
+              onClick={functions.newMaterial}
+              width="100px"
+            >
+              {variables.posting ? "Posting" : "Post"}
             </Button>
           </LModalHeader>
           <NewMaterial />
@@ -42,52 +49,45 @@ const Classwork = () => {
           <div>
             <span>All</span>
           </div>
-          <div>
-            <span>
-              Unit 1: Introduction to fundatamentals of data structures
-            </span>
-          </div>
-          <div>
-            <span>Unit 2</span>
-          </div>
+          {variables.topics.map(({ title, _id }) => (
+            <div key={_id}>
+              <span>{title}</span>
+            </div>
+          ))}
         </Topics>
         <Material>
-          <Create>
-            <Button
-              border="1px solid var(--blue)"
-              color="var(--blue)"
-              bg="transparent"
-              width="190px"
-              flex
-              hover
-              hoverColor="#fff"
-            >
-              <CreateOutlined />
-              <span>New Assignment</span>
-            </Button>
-            <Button
-              border="1px solid var(--blue)"
-              color="var(--blue)"
-              bg="transparent"
-              width="190px"
-              flex
-              hover
-              hoverColor="#fff"
-              onClick={() => functions.setMaterialOpenState(true)}
-            >
-              <NoteAddIcon />
-              <span>New Material</span>
-            </Button>
-          </Create>
-
-          <Topic
-            title="Unit 1: Introduction to fundatamentals of data structures"
-            _id="11"
-          />
-          <Topic
-            title="Unit 1: Introduction to fundatamentals of data structures"
-            _id="11"
-          />
+          {variables.classRoom?.userId._id === variables.user?._id && (
+            <Create>
+              <Button
+                border="1px solid var(--blue)"
+                color="var(--blue)"
+                bg="transparent"
+                width="190px"
+                flex
+                hover
+                hoverColor="#fff"
+              >
+                <CreateOutlined />
+                <span>New Assignment</span>
+              </Button>
+              <Button
+                border="1px solid var(--blue)"
+                color="var(--blue)"
+                bg="transparent"
+                width="190px"
+                flex
+                hover
+                hoverColor="#fff"
+                onClick={() => functions.setMaterialOpenState(true)}
+              >
+                <NoteAddIcon />
+                <span>New Material</span>
+              </Button>
+            </Create>
+          )}
+          {variables.topics.map(({ title, _id, classId }) => (
+            <Topic classId={classId._id} title={title} _id={_id} key={_id} />
+          ))}
         </Material>
       </Main>
     </StyledClasswork>

@@ -12,7 +12,12 @@ class MaterialService {
     return await Material.create(data);
   }
   async findTopics(query: any) {
-    return await Topic.find(query);
+    return await Topic.find(query)
+      .populate("classId")
+      .populate("creatorId", "-password");
+  }
+  async getMaterials(query: any) {
+    return await Material.find(query);
   }
 }
 

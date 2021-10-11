@@ -6,6 +6,8 @@ import materialRoutes from "./router/material-router";
 import { config } from "dotenv";
 import connection from "./db";
 import cookieParser from "cookie-parser";
+import { Server } from "socket.io";
+import Emitter from "events";
 
 config();
 
@@ -28,6 +30,10 @@ app.use(express.json({ limit: "10mb" }));
 
 app.use("/storage", express.static("storage"));
 
+const eventEmitter = new Emitter({});
+
+app.set("eventEmitter", eventEmitter);
+
 // database connection
 
 connection();
@@ -38,4 +44,32 @@ app.use("/api", authRoutes);
 app.use("/api", classRoutes);
 app.use("/api/m", materialRoutes);
 
-app.listen(PORT, () => console.log(`Running on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Running on port ${PORT}`));
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.on("connection", (socket) => {
+  socket.on("disconnect", () => {});
+
+  socket.on("join-class-room", (id) => {
+    socket.join(id);
+
+    console.log("connected to ", id);
+
+    socket.on("topic-created", (topic) => {
+      console.log(topic);
+      io.to(id).emit("topic-created", topic);
+    });
+
+    // send the new topic created to the classroom with joined id
+
+    socket.on("new-material", (material) => {
+      console.log(material);
+      io.to(id).emit("new-material", material);
+    });
+  });
+});

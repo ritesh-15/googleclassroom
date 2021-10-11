@@ -2,16 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface NewMaterialState {
   title: string;
-  description?: string;
+  description: string;
   topic: string;
-  topicId?: string;
 }
 
 const initialState: NewMaterialState = {
   title: "",
   description: "",
   topic: "",
-  topicId: "",
 };
 
 export const newMaterialSlice = createSlice({
@@ -27,13 +25,9 @@ export const newMaterialSlice = createSlice({
     setTopic: (state, action: PayloadAction<string>) => {
       state.topic = action.payload;
     },
-    setTopicId: (state, action: PayloadAction<string | undefined>) => {
-      state.topicId = action.payload;
-    },
   },
 });
 
-export const { setDescription, setTitle, setTopic, setTopicId } =
-  newMaterialSlice.actions;
+export const { setDescription, setTitle, setTopic } = newMaterialSlice.actions;
 
 export default newMaterialSlice.reducer;

@@ -5,25 +5,15 @@ import Input from "../input/Input";
 export interface Select {
   title: string;
   current: any;
-  currentId?: any;
   changeCurrent(val: any): void;
-  changeCurrentId?(val: any): void;
-  options: { title: string; _id?: string }[];
+  options: { title: string }[];
 }
 
-const Select: FC<Select> = ({
-  options,
-  title,
-  changeCurrent,
-  current,
-  currentId,
-  changeCurrentId,
-}) => {
+const Select: FC<Select> = ({ options, title, changeCurrent, current }) => {
   const [show, showSet] = useState(false);
 
   const changeState = (event: any) => {
     const val = event.target.getAttribute("data-value");
-    const id = event.target.getAttribute("data-id");
     changeCurrent(val);
     showSet(!show);
   };
@@ -34,13 +24,8 @@ const Select: FC<Select> = ({
         <span> {current || title}</span>
       </Selected>
       <Options show={show}>
-        {options.map(({ title, _id }, index: number) => (
-          <div
-            data-id={_id}
-            onClick={changeState}
-            key={index}
-            data-value={title}
-          >
+        {options.map(({ title }, index: number) => (
+          <div onClick={changeState} key={index} data-value={title}>
             <label htmlFor="">{title}</label>
             <input type="radio" name="option" />
           </div>

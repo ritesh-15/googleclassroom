@@ -4,12 +4,11 @@ import {
   setDescription,
   setTitle,
   setTopic,
-  setTopicId,
 } from "../../reducers/new-material/new-materila-slice";
 
 const NewMaterialHelper = () => {
   const dispatch = useDispatch();
-  const { title, description, topic, topicId } = useSelector(
+  const { title, description, topic } = useSelector(
     (state: RootState) => state.newMaterial
   );
 
@@ -22,15 +21,11 @@ const NewMaterialHelper = () => {
   const changeTopicState = (val: string): void => {
     dispatch(setTopic(val));
   };
-  const changeTopicIdState = (val?: string): void => {
-    dispatch(setTopicId(val));
-  };
 
   return {
-    variables: { title, description, topic, topicId },
+    variables: { title, description, topic },
     functions: {
       changeDescriptionState,
-      changeTopicIdState,
       changeTitleState,
       changeTopicState,
     },

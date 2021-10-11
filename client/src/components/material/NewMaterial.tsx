@@ -15,13 +15,13 @@ const NewMaterial = () => {
     <StyledNewMaterial>
       <MaterialLeft>
         <Input
-          value={variables.title}
+          value={variables.variables.title}
           onChange={functions.setTitleState}
           title="Title"
           variant
         />
         <Textarea
-          value={variables.description}
+          value={variables.variables.description}
           onChange={functions.setDescriptionState}
           title="Description (optional)"
           variant
@@ -29,7 +29,7 @@ const NewMaterial = () => {
       </MaterialLeft>
       <MaterialRight>
         <h1>Topic</h1>
-        {variables.topic.title === "Create new topic" ? (
+        {variables.topic === "Create new topic" ? (
           <Input
             value={variables.newTopic}
             onChange={functions.changeNewTopic}

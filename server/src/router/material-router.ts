@@ -8,4 +8,8 @@ router.post("/new-material", userMiddleware, materialController.newMaterial);
 
 router.get("/get-topics/:id", userMiddleware, materialController.getTopics);
 
+router.get("/get-materials", userMiddleware, materialController.getMaterials);
+
+router.get("/topics", userMiddleware, materialController.topics);
+
 export default router;

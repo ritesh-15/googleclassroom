@@ -8,7 +8,7 @@ class MaterialController {
   async newMaterial(req: Request, res: Response) {
     // get the classid from the req body
 
-    const { classId, topic, title, description, topicId } = req.body;
+    const { classId, topic, title, description } = req.body;
 
     // get the title description from the body
     // validate the request
@@ -34,28 +34,29 @@ class MaterialController {
 
     let topicFound;
 
-    if (topicId) {
-      try {
-        topicFound = await materialService.findTopic({ _id: topicId });
-      } catch (err) {
-        return res.status(500).json({ message: "Db error" });
-      }
-
-      // check topic is found or not
-
-      if (!topicFound)
-        return res.status(404).json({ message: "No topic found!" });
+    try {
+      topicFound = await materialService.findTopic({
+        classId: classRoom._id,
+        title: topic,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: "Db error" });
     }
+
+    // check topic is found or not
 
     // if not topic id then create new topic
 
-    if (!topicId) {
+    let isNew = false;
+
+    if (!topicFound) {
       try {
         topicFound = await materialService.newTopic({
           title: topic,
           classId: classRoom._id,
           creatorId: classRoom.userId,
         });
+        isNew = true;
       } catch (err) {
         return res.status(500).json({ message: "Db error" });
       }
@@ -76,11 +77,10 @@ class MaterialController {
     try {
       material = await materialService.newMaterial(data);
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ message: "Db error" });
     }
 
-    return res.json({ material, created: true, topic: topicFound });
+    return res.json({ material, created: true, topic: topicFound, isNew });
   }
 
   async getTopics(req: Request, res: Response) {
@@ -129,6 +129,90 @@ class MaterialController {
     }
 
     return res.json({ topics: topicTitles });
+  }
+
+  async getMaterials(req: Request, res: Response) {
+    // get the id of the topic from the params
+    const { topic, classId } = req.query;
+
+    if (!topic || !classId)
+      return res.status(400).json({ message: "Bad request!" });
+
+    // verify the id
+
+    let topicFound;
+
+    try {
+      topicFound = await materialService.findTopic({
+        _id: topic,
+        classId: classId,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: "Database error!" });
+    }
+
+    // find the topic with given id
+
+    if (!topicFound)
+      return res.status(404).json({ message: "no topic found with this id" });
+
+    // get the material with given topic id and send the responce
+
+    let materials;
+
+    try {
+      materials = await materialService.getMaterials({
+        topic: topicFound._id,
+        classId: classId,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: "Database error" });
+    }
+
+    // verify the materials
+
+    if (!materials)
+      return res.status(404).json({ message: "no material found" });
+
+    // send the responce
+
+    return res.json({ materials, found: true, topicId: topic, classId });
+  }
+
+  async topics(req: Request, res: Response) {
+    // get the class id from the request
+    const { classId } = req.query;
+    // verify the class id
+
+    if (!classId) return res.status(400).json({ messsage: "Bad request" });
+
+    // get the class details
+
+    let classRoom;
+
+    try {
+      classRoom = await classService.getClass({ _id: classId });
+    } catch (error) {
+      return res.status(500).json({ dbError: true });
+    }
+
+    if (!classRoom) return res.status(404).json({ classFound: null });
+
+    // get the topics with given class id
+
+    let topics;
+
+    try {
+      topics = await materialService.findTopics({ classId });
+    } catch (error) {
+      return res.status(500).json({ dbError: true, status: 500 });
+    }
+
+    if (!topics) return res.status(404).json({ topics: null });
+
+    // send the topics in the responce
+
+    return res.json({ topics, found: topics.length });
   }
 }
 

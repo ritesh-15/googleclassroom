@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledTopic = styled.div`
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   max-width: 800px;
 `;
 
@@ -51,6 +51,10 @@ export const TopicMaterials = styled.div`
     border-radius: 8px;
     cursor: pointer;
 
+    h1 {
+      margin-left: 1rem;
+    }
+
     div {
       display: flex;
       align-items: center;
@@ -60,7 +64,7 @@ export const TopicMaterials = styled.div`
       span {
         margin-right: 2rem;
         font-size: 0.8em;
-        color: rgba(0, 0, 0, 0.5);
+        color: rgba(0, 0, 0, 0.9);
       }
     }
 

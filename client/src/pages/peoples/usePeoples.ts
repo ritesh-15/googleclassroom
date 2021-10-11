@@ -13,18 +13,27 @@ const usePeoples = () => {
 
   const { id } = useParams<UrlParams>();
   const { changeProgressState } = ProgressHelper();
+  const [unMounted, setUnMounted] = useState(false);
 
   useEffect(() => {
     changeProgressState(true);
     (async () => {
       try {
         const { data } = <any>await getPeoples(id);
-        setPeoples(data.peoples);
+
+        if (!unMounted) {
+          setPeoples(data.peoples);
+        }
+
         changeProgressState(false);
       } catch (err) {
         changeProgressState(false);
       }
     })();
+
+    return () => {
+      setUnMounted(true);
+    };
   }, [id]);
 
   return {
