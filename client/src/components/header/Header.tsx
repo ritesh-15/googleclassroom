@@ -6,21 +6,21 @@ import Modal from "../modal/Modal";
 import CreateClass from "../createclass/CreateClass";
 import { useState } from "react";
 import Tabs from "../tabs/Tabs";
-import ClassDetailsHelper from "../../helpers/classDetailas/ClassDetailsHelper";
 import { Link } from "react-router-dom";
 import Progress from "../progress/Progress";
 import LargeModal from "../largeModal/LargeModal";
 import JoinClass from "../joinClass/JoinClass";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../api/auth/register.api";
+import useJoinRoom from "../../hooks/useJoinRoom";
 
 const Header = () => {
   const { user } = UserHelper();
   const [modalState, setModalState] = useState(false);
-  const { classRoom } = ClassDetailsHelper();
   const url = window.location.pathname;
   const [largeModalState, setLargeModalState] = useState(false);
   const { changeUser } = UserHelper();
+  useJoinRoom();
 
   const logOut = async () => {
     try {

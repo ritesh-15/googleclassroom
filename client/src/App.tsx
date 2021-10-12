@@ -13,18 +13,9 @@ import useRefresh from "./hooks/useRefresh";
 import Loading from "./components/loading/Loading";
 import Classwork from "./pages/classwork/Classwork";
 import Peoples from "./pages/peoples/Peoples";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
-import SocketHelper from "./helpers/socket/SocketHelper";
 
 const App: FC = () => {
   const loading = useRefresh();
-  const { changeSocket } = SocketHelper();
-
-  useEffect(() => {
-    const socket = io("http://localhost:9000");
-    changeSocket(socket);
-  }, []);
 
   return loading ? (
     <Loading />

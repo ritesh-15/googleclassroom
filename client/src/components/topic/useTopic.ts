@@ -31,17 +31,19 @@ const useTopic = (_id: string, classId: string) => {
   useEffect(() => {
     if (!socket) return;
 
+    console.log("New material");
+
     socket.on("new-material", (m: MaterialInterface) => {
-      console.log(m);
       if (m.topic._id === _id) {
         setMaterials((prev) => [...prev, m]);
       }
     });
 
     return () => {
-      socket.off();
+      socket.off("new-material");
+      console.log("Remove new material");
     };
-  });
+  }, [socket]);
 
   return {
     variables: {

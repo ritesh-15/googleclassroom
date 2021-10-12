@@ -66,6 +66,7 @@ const Classwork = () => {
                 flex
                 hover
                 hoverColor="#fff"
+                onClick={functions.newAssignment}
               >
                 <CreateOutlined />
                 <span>New Assignment</span>

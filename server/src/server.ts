@@ -16,6 +16,9 @@ const app: Application = express();
 const PORT = process.env.PORT || 9000;
 
 // Middlewares
+
+process.setMaxListeners(0);
+
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -67,6 +70,17 @@ io.on("connection", (socket) => {
     socket.on("new-topic", (newTopic) => {
       console.log(newTopic);
       io.to(id).emit("new-topic-created", newTopic);
+    });
+
+    socket.on("testing", (test) => {
+      console.log(test);
+      io.to(id).emit("testing", { message: "Testing" });
+    });
+
+    // leave the room
+
+    socket.on("leave-room", (classId) => {
+      socket.leave(classId);
     });
 
     // send the new topic created to the classroom with joined id

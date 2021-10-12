@@ -1,14 +1,12 @@
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { useParams } from "react-router";
 import { getClassDetails, uploadBanner } from "../../api/class/class.api";
 import ClassDetailsHelper from "../../helpers/classDetailas/ClassDetailsHelper";
 import MessageHelper from "../../helpers/message/MessageHelper";
 import ProgressHelper from "../../helpers/progress/ProgressHelper";
-import SocketHelper from "../../helpers/socket/SocketHelper";
 import UserHelper from "../../helpers/user/UserHelper";
 import useJoinRoom from "../../hooks/useJoinRoom";
 import { User } from "../../reducers/user/userSlice";
-import AuthValidation from "../../validations/authvalidation/AuthValidation";
 import ImageTypeValidation from "../../validations/imageTypeValidation/ImageTypeValidation";
 
 export interface UrlParams {
@@ -34,8 +32,6 @@ const useViewClass = () => {
   const { changeProgressState } = ProgressHelper();
   const { validateImageType } = ImageTypeValidation();
   const { user } = UserHelper();
-  const { socket } = SocketHelper();
-  useJoinRoom(id);
 
   useEffect(() => {
     if (id === classRoom?._id) return;

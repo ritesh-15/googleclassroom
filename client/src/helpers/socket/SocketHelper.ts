@@ -4,9 +4,9 @@ import socketContext, {
 } from "../../contexts/socket/socketContext";
 
 const SocketHelper = () => {
-  const { socket, changeSocket } = <SocketState>useContext(socketContext);
+  const { socket } = <SocketState>useContext(socketContext);
 
-  return { socket, changeSocket };
+  return { socket };
 };
 
 export default SocketHelper;

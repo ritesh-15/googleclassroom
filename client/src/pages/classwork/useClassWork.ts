@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import {
   getClassroomTopics,
   postNewMaterial,
@@ -13,7 +12,7 @@ import TopicOptionsHelper from "../../helpers/topicOptions/TopicOptionsHelper";
 import UserHelper from "../../helpers/user/UserHelper";
 import useJoinRoom from "../../hooks/useJoinRoom";
 import { User } from "../../reducers/user/userSlice";
-import { ClassDetails, UrlParams } from "../class/useViewClass";
+import { ClassDetails } from "../class/useViewClass";
 
 export interface Topic {
   classId: ClassDetails;
@@ -35,6 +34,19 @@ const useClassWork = () => {
   const [posting, setPosting] = useState(false);
   const { user } = UserHelper();
   const { socket } = SocketHelper();
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("new-topic-created", (newTopic: Topic) => {
+      console.log("New topic ", newTopic);
+      setTopics((prevs) => [...prevs, newTopic]);
+    });
+
+    return () => {
+      socket.off("new-topic-created");
+    };
+  }, [socket]);
 
   // get the topics
 
@@ -71,19 +83,6 @@ const useClassWork = () => {
     };
   }, [classRoom?._id]);
 
-  useEffect(() => {
-    if (!socket) return;
-
-    socket.on("new-topic-created", (topic: Topic) => {
-      console.log("In user classwork ", topic);
-      setTopics((prevs) => [...prevs, topic]);
-    });
-
-    return () => {
-      socket.off();
-    };
-  });
-
   const clear = () => {
     functions.changeDescriptionState("");
     functions.changeTitleState("");
@@ -108,9 +107,11 @@ const useClassWork = () => {
     try {
       const { data } = await postNewMaterial(senderData);
       if (!data.isNew) {
+        console.log("Data is here");
         socket?.emit("new-material", data.material);
       } else {
         data.topic.classId = classRoom;
+        console.log("Data is here");
         socket?.emit("new-topic", data.topic);
       }
 
@@ -121,6 +122,8 @@ const useClassWork = () => {
       setPosting(false);
     }
   };
+
+  const newAssignment = () => {};
 
   return {
     variables: {
@@ -134,6 +137,7 @@ const useClassWork = () => {
       setMaterialOpenState,
       newMaterial,
       clear,
+      newAssignment,
     },
   };
 };

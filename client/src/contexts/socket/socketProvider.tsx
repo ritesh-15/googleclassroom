@@ -1,15 +1,25 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import { Socket, io } from "socket.io-client";
 import SocketContext from "./socketContext";
 
 const SocketProvider = ({ children }: { children: ReactElement }) => {
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
 
-  const changeSocket = (val: any): void => {
-    setSocket(val);
-  };
+  useEffect(() => {
+    const newSocket = io("http://localhost:9000", {
+      forceNew: true,
+    });
+    setSocket(newSocket);
+
+    console.log("New socket connection");
+
+    return () => {
+      newSocket.close();
+    };
+  }, []);
 
   return (
-    <SocketContext.Provider value={{ socket, changeSocket }}>
+    <SocketContext.Provider value={{ socket }}>
       {children}
     </SocketContext.Provider>
   );
