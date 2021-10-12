@@ -9,7 +9,6 @@ export const StyledSelect = styled.div`
 `;
 
 export const Selected = styled.div<props>`
-  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   padding: 1rem;
   position: relative;
@@ -17,6 +16,7 @@ export const Selected = styled.div<props>`
   align-items: center;
   cursor: pointer;
   text-transform: capitalize;
+  background: var(--bg-grey);
 
   span {
     padding-right: 1rem;

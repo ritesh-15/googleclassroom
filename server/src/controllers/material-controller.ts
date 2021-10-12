@@ -8,12 +8,12 @@ class MaterialController {
   async newMaterial(req: Request, res: Response) {
     // get the classid from the req body
 
-    const { classId, topic, title, description } = req.body;
+    const { classId, topic, title, description, type, due, points } = req.body;
 
     // get the title description from the body
     // validate the request
 
-    if (!classId || !topic || !title)
+    if (!classId || !topic || !title || !type)
       return res.status(400).json({ msg: "bad request!" });
 
     // verify the class id
@@ -70,6 +70,9 @@ class MaterialController {
       topic: topicFound,
       classId: classId,
       creatorId: req.body.user._id,
+      type: type,
+      due: due,
+      points: points,
     };
 
     let material;

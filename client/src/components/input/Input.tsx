@@ -2,7 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { StyledInput } from "./Input.styled";
 
 interface props {
-  title: string;
+  title?: string;
   variant?: boolean;
   type?: string;
   value: string;

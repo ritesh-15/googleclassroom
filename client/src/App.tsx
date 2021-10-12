@@ -13,6 +13,7 @@ import useRefresh from "./hooks/useRefresh";
 import Loading from "./components/loading/Loading";
 import Classwork from "./pages/classwork/Classwork";
 import Peoples from "./pages/peoples/Peoples";
+import ViewMaterial from "./pages/viewmaterial/ViewMaterial";
 
 const App: FC = () => {
   const loading = useRefresh();
@@ -42,6 +43,11 @@ const App: FC = () => {
           <Protected path="/v/c/p/:id">
             <Header />
             <Peoples />
+          </Protected>
+
+          <Protected path="/m/:id">
+            <Header />
+            <ViewMaterial />
           </Protected>
 
           <LoginRoute path="/login">

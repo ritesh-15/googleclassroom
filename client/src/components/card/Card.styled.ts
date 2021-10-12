@@ -48,7 +48,7 @@ export const CardTop = styled.div<cardTop>`
     align-items: center;
 
     a {
-      flex: 1;
+      max-width: 80%;
 
       &:hover {
         text-decoration: underline;
@@ -60,7 +60,6 @@ export const CardTop = styled.div<cardTop>`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      width: 80%;
     }
   }
 `;

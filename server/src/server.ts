@@ -63,30 +63,25 @@ io.on("connection", (socket) => {
     const id = data.id;
     socket.join(id);
 
-    console.log("connected user ", data.user, id);
-
     // new topic created
 
     socket.on("new-topic", (newTopic) => {
-      console.log(newTopic);
       io.to(id).emit("new-topic-created", newTopic);
-    });
-
-    socket.on("testing", (test) => {
-      console.log(test);
-      io.to(id).emit("testing", { message: "Testing" });
     });
 
     // leave the room
 
     socket.on("leave-room", (classId) => {
+      socket.removeAllListeners("new-material");
+      socket.removeAllListeners("new-material");
+      socket.removeAllListeners("new-topic-created");
+      socket.removeAllListeners("new-topic");
       socket.leave(classId);
     });
 
     // send the new topic created to the classroom with joined id
 
     socket.on("new-material", (material) => {
-      console.log(material);
       io.to(id).emit("new-material", material);
     });
   });

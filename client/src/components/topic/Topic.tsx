@@ -4,6 +4,7 @@ import { StyledTopic, TopicMaterials, TopicTitle } from "./Topic.styled";
 import useTopic from "./useTopic";
 import DescriptionIcon from "@mui/icons-material/Description";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 export interface Topic {
   title: string;
@@ -21,17 +22,31 @@ const Topic: FC<Topic> = ({ title, _id, classId }) => {
         <MoreVert />
       </TopicTitle>
       <TopicMaterials>
-        {variables.materials.map(({ title, _id, createdAt }) => (
-          <div key={_id}>
+        {variables.materials.map(({ title, _id, createdAt, type, due }) => (
+          <Link to={`/m/${_id}`} key={_id}>
             <div>
-              <DescriptionIcon style={{ color: "rgba(0,0,0,0.3)" }} />
+              <DescriptionIcon
+                style={
+                  type === "assignment"
+                    ? { color: "var(--blue)" }
+                    : { color: "rgba(0,0,0,0.3)" }
+                }
+              />
               <h1>{title}</h1>
             </div>
             <div>
-              <span>Posted on {moment(createdAt).format("DD MMM")} </span>
+              {type === "assignment" ? (
+                <span>
+                  {due
+                    ? `Due on ${moment(due).format("DD MMM")} `
+                    : "No due date"}
+                </span>
+              ) : (
+                <span>Posted on {moment(createdAt).format("DD MMM")} </span>
+              )}
               <DeleteOutline className="icon" />
             </div>
-          </div>
+          </Link>
         ))}
       </TopicMaterials>
     </StyledTopic>

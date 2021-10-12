@@ -29,17 +29,17 @@ const NewMaterial = () => {
       </MaterialLeft>
       <MaterialRight>
         <h1>Topic</h1>
-        {variables.topic === "Create new topic" ? (
+        {variables.variables.topic === "Create new topic" ? (
           <Input
-            value={variables.newTopic}
+            value={variables.variables.newTopic}
             onChange={functions.changeNewTopic}
             title="New topic"
             variant
           />
         ) : (
           <Select
-            current={variables.topic}
-            changeCurrent={functions.topicSet}
+            current={variables.variables.topic}
+            changeCurrent={functions.changeTopic}
             options={variables.options}
             title="Choose topic"
           />

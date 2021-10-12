@@ -13,12 +13,14 @@ import LargeModal from "../../components/largeModal/LargeModal";
 import NewMaterial from "../../components/material/NewMaterial";
 import useClassWork from "./useClassWork";
 import LModalHeader from "../../styles/largeModalHeader/LModalHeader.styled";
+import NewAssignment from "../../components/assignment/NewAssignment";
 
 const Classwork = () => {
   const { variables, functions } = useClassWork();
 
   return (
     <StyledClasswork>
+      {/* new material modal */}
       <LargeModal open={variables.materialOpenState}>
         <>
           <LModalHeader>
@@ -44,6 +46,32 @@ const Classwork = () => {
         </>
       </LargeModal>
 
+      {/* new assignment modal */}
+      <LargeModal open={variables.assignmentOpenState}>
+        <>
+          <LModalHeader>
+            <div>
+              <CloseOutlined
+                onClick={() => {
+                  functions.setAssignmentOpenState(false);
+                  functions.clear();
+                }}
+                className="icon"
+              />
+              <h1>New Assignment</h1>
+            </div>
+            <Button
+              disabled={variables.posting ? true : false}
+              onClick={functions.newMaterial}
+              width="100px"
+            >
+              {variables.posting ? "Assigning" : "Assign"}
+            </Button>
+          </LModalHeader>
+          <NewAssignment />
+        </>
+      </LargeModal>
+
       <Main>
         <Topics>
           <div>
@@ -66,7 +94,7 @@ const Classwork = () => {
                 flex
                 hover
                 hoverColor="#fff"
-                onClick={functions.newAssignment}
+                onClick={() => functions.setAssignmentOpenState(true)}
               >
                 <CreateOutlined />
                 <span>New Assignment</span>

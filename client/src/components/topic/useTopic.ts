@@ -11,6 +11,9 @@ export interface MaterialInterface {
   descriptions?: string;
   topic: Topic;
   createdAt: Date;
+  type: string;
+  due?: string;
+  points: string;
 }
 
 const useTopic = (_id: string, classId: string) => {

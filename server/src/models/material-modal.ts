@@ -6,6 +6,9 @@ export interface MaterialInterface {
   topic: ObjectId;
   classId: ObjectId;
   creatorId: ObjectId;
+  type: string;
+  due?: string;
+  points?: string;
 }
 
 const MaterialSchema = new Schema<MaterialInterface>(
@@ -17,6 +20,10 @@ const MaterialSchema = new Schema<MaterialInterface>(
     description: {
       type: String,
       default: "",
+    },
+    type: {
+      type: String,
+      required: true,
     },
     topic: {
       type: Schema.Types.ObjectId,
@@ -32,6 +39,14 @@ const MaterialSchema = new Schema<MaterialInterface>(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "users",
+    },
+    due: {
+      type: String,
+      default: "",
+    },
+    points: {
+      type: String,
+      default: "",
     },
   },
   { timestamps: true }

@@ -43,7 +43,7 @@ export const TopicTitle = styled.div`
 `;
 
 export const TopicMaterials = styled.div`
-  div {
+  a {
     display: flex;
     align-items: center;
     justify-content: space-between;

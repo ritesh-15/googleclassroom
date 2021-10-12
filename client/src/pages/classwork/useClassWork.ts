@@ -24,7 +24,7 @@ export interface Topic {
 const useClassWork = () => {
   const [materialOpenState, setMaterialOpenState] = useState(false);
   const { variables, functions } = NewMaterialHelper();
-  const { title, topic, description } = variables;
+  const { title, topic, description, due, points, type, newTopic } = variables;
   const { changeMessage } = MessageHelper();
   const { classRoom } = ClassDetailsHelper();
   const { changeOptionsState, clearAllOptions } = TopicOptionsHelper();
@@ -34,6 +34,9 @@ const useClassWork = () => {
   const [posting, setPosting] = useState(false);
   const { user } = UserHelper();
   const { socket } = SocketHelper();
+
+  // assignments variables
+  const [assignmentOpenState, setAssignmentOpenState] = useState(false);
 
   useEffect(() => {
     if (!socket) return;
@@ -87,6 +90,10 @@ const useClassWork = () => {
     functions.changeDescriptionState("");
     functions.changeTitleState("");
     functions.changeTopicState("");
+    functions.changeTypeState("");
+    functions.changeDue("");
+    functions.changePoints("");
+    functions.changeNewTopic("");
   };
 
   const newMaterial = async (): Promise<void> => {
@@ -99,23 +106,26 @@ const useClassWork = () => {
 
     const senderData = {
       title,
-      topic,
+      topic: topic || newTopic,
       description,
       classId: classRoom?._id,
+      type,
+      due,
+      points,
     };
 
     try {
       const { data } = await postNewMaterial(senderData);
       if (!data.isNew) {
-        console.log("Data is here");
         socket?.emit("new-material", data.material);
       } else {
         data.topic.classId = classRoom;
-        console.log("Data is here");
+
         socket?.emit("new-topic", data.topic);
       }
 
       setMaterialOpenState(false);
+      setAssignmentOpenState(false);
       setPosting(false);
       clear();
     } catch (err) {
@@ -132,12 +142,14 @@ const useClassWork = () => {
       posting,
       classRoom,
       user,
+      assignmentOpenState,
     },
     functions: {
       setMaterialOpenState,
       newMaterial,
       clear,
       newAssignment,
+      setAssignmentOpenState,
     },
   };
 };

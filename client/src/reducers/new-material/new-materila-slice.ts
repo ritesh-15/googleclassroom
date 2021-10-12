@@ -4,12 +4,20 @@ export interface NewMaterialState {
   title: string;
   description: string;
   topic: string;
+  type: string;
+  due: string;
+  points: string;
+  newTopic: string;
 }
 
 const initialState: NewMaterialState = {
   title: "",
   description: "",
   topic: "",
+  type: "",
+  due: "",
+  points: "",
+  newTopic: "",
 };
 
 export const newMaterialSlice = createSlice({
@@ -25,9 +33,29 @@ export const newMaterialSlice = createSlice({
     setTopic: (state, action: PayloadAction<string>) => {
       state.topic = action.payload;
     },
+    setDue: (state, action: PayloadAction<string>) => {
+      state.due = action.payload;
+    },
+    setType: (state, action: PayloadAction<string>) => {
+      state.type = action.payload;
+    },
+    setPoints: (state, action: PayloadAction<string>) => {
+      state.points = action.payload;
+    },
+    setNewTopic: (state, action: PayloadAction<string>) => {
+      state.newTopic = action.payload;
+    },
   },
 });
 
-export const { setDescription, setTitle, setTopic } = newMaterialSlice.actions;
+export const {
+  setDescription,
+  setTitle,
+  setTopic,
+  setDue,
+  setNewTopic,
+  setPoints,
+  setType,
+} = newMaterialSlice.actions;
 
 export default newMaterialSlice.reducer;

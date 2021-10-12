@@ -10,12 +10,10 @@ const useNewMaterial = () => {
   const [newTopic, setNewTopic] = useState("");
   const { options } = TopicOptionsHelper();
 
-  useEffect(() => {
-    // set the title in the new material state
-    if (topic === "Create new topic") return;
-    functions.changeTopicState(topic);
-    return () => {};
-  }, [topic]);
+  const changeTopic = (val: any) => {
+    functions.changeTypeState("material");
+    functions.changeTopicState(val);
+  };
 
   const setTitleState = (e: ChangeEvent<HTMLInputElement>): void => {
     functions.changeTitleState(e.target.value);
@@ -42,7 +40,7 @@ const useNewMaterial = () => {
     functions: {
       setTitleState,
       setDescriptionState,
-      topicSet,
+      changeTopic,
       changeNewTopic,
     },
   };
