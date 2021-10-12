@@ -29,7 +29,10 @@ const useTopic = (_id: string, classId: string) => {
   }, [_id]);
 
   useEffect(() => {
+    if (!socket) return;
+
     socket.on("new-material", (m: MaterialInterface) => {
+      console.log(m);
       if (m.topic._id === _id) {
         setMaterials((prev) => [...prev, m]);
       }

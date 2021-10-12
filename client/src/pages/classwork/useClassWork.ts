@@ -11,6 +11,7 @@ import ProgressHelper from "../../helpers/progress/ProgressHelper";
 import SocketHelper from "../../helpers/socket/SocketHelper";
 import TopicOptionsHelper from "../../helpers/topicOptions/TopicOptionsHelper";
 import UserHelper from "../../helpers/user/UserHelper";
+import useJoinRoom from "../../hooks/useJoinRoom";
 import { User } from "../../reducers/user/userSlice";
 import { ClassDetails, UrlParams } from "../class/useViewClass";
 
@@ -71,7 +72,10 @@ const useClassWork = () => {
   }, [classRoom?._id]);
 
   useEffect(() => {
-    socket.on("topic-created", (topic: Topic) => {
+    if (!socket) return;
+
+    socket.on("new-topic-created", (topic: Topic) => {
+      console.log("In user classwork ", topic);
       setTopics((prevs) => [...prevs, topic]);
     });
 
@@ -103,11 +107,11 @@ const useClassWork = () => {
 
     try {
       const { data } = await postNewMaterial(senderData);
-      if (data.isNew) {
-        data.topic.classId = classRoom;
-        await socket.emit("topic-created", data.topic);
+      if (!data.isNew) {
+        socket?.emit("new-material", data.material);
       } else {
-        await socket.emit("new-material", data.material);
+        data.topic.classId = classRoom;
+        socket?.emit("new-topic", data.topic);
       }
 
       setMaterialOpenState(false);

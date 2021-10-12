@@ -6,6 +6,7 @@ import MessageHelper from "../../helpers/message/MessageHelper";
 import ProgressHelper from "../../helpers/progress/ProgressHelper";
 import SocketHelper from "../../helpers/socket/SocketHelper";
 import UserHelper from "../../helpers/user/UserHelper";
+import useJoinRoom from "../../hooks/useJoinRoom";
 import { User } from "../../reducers/user/userSlice";
 import AuthValidation from "../../validations/authvalidation/AuthValidation";
 import ImageTypeValidation from "../../validations/imageTypeValidation/ImageTypeValidation";
@@ -34,6 +35,7 @@ const useViewClass = () => {
   const { validateImageType } = ImageTypeValidation();
   const { user } = UserHelper();
   const { socket } = SocketHelper();
+  useJoinRoom(id);
 
   useEffect(() => {
     if (id === classRoom?._id) return;
@@ -50,14 +52,6 @@ const useViewClass = () => {
       }
     })();
   }, [id]);
-
-  useEffect(() => {
-    socket.emit("join-class-room", id);
-
-    return () => {
-      socket.off();
-    };
-  });
 
   const isCreator = (): boolean => {
     if (classRoom?.userId._id === user?._id) return true;

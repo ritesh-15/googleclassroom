@@ -49,20 +49,24 @@ const server = app.listen(PORT, () => console.log(`Running on port ${PORT}`));
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
+    credentials: true,
   },
 });
 
 io.on("connection", (socket) => {
   socket.on("disconnect", () => {});
 
-  socket.on("join-class-room", (id) => {
+  socket.on("join-class-room", (data) => {
+    const id = data.id;
     socket.join(id);
 
-    console.log("connected to ", id);
+    console.log("connected user ", data.user, id);
 
-    socket.on("topic-created", (topic) => {
-      console.log(topic);
-      io.to(id).emit("topic-created", topic);
+    // new topic created
+
+    socket.on("new-topic", (newTopic) => {
+      console.log(newTopic);
+      io.to(id).emit("new-topic-created", newTopic);
     });
 
     // send the new topic created to the classroom with joined id

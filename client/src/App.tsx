@@ -2,12 +2,7 @@ import { FC } from "react";
 import "./App.css";
 import Header from "./components/header/Header";
 import Home from "./pages/home/Home";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import ViewClass from "./pages/class/ViewClass";
 import Protected from "./routes/Protected";
 import LoginRoute from "./routes/LoginRoute";
