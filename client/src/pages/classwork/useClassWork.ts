@@ -106,7 +106,7 @@ const useClassWork = () => {
 
     const senderData = {
       title,
-      topic: topic || newTopic,
+      topic: topic === "Create new topic" ? newTopic : topic,
       description,
       classId: classRoom?._id,
       type,

@@ -55,7 +55,7 @@ const NewAssignment = () => {
           {variables.variables.topic === "Create new topic" ? (
             <Input
               value={variables.variables.newTopic}
-              onChange={(e) => functions.setNewTopic(e.target.value)}
+              onChange={functions.changeNewTopic}
               title="New topic"
               variant
             />

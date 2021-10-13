@@ -24,8 +24,7 @@ const useNewMaterial = () => {
   };
 
   const changeNewTopic = (e: ChangeEvent<HTMLInputElement>): void => {
-    setNewTopic(e.target.value);
-    functions.changeTopicState(e.target.value);
+    functions.changeNewTopic(e.target.value);
   };
 
   return {

@@ -32,14 +32,13 @@ const NewAssignmentLogic = () => {
     functions.changeDue(e.target.value);
   };
 
+  const changeNewTopic = (e: ChangeEvent<HTMLInputElement>) => {
+    functions.changeNewTopic(e.target.value);
+  };
+
   return {
     variables: {
-      title,
-      description,
       options,
-      topic,
-      newTopic,
-      points,
       variables,
     },
     functions: {
@@ -50,6 +49,7 @@ const NewAssignmentLogic = () => {
       changePoints,
       changeTopic,
       changeDue,
+      changeNewTopic,
     },
   };
 };

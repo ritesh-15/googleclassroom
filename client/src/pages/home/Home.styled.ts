@@ -5,4 +5,5 @@ export const StyledHome = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  margin-top: 61px;
 `;

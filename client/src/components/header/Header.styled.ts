@@ -7,7 +7,7 @@ export const StyledHeader = styled.div`
   justify-content: space-between;
   padding: 0 1rem;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  position: -webkit-sticky;
+  position: fixed;
   width: 100%;
   top: 0 !important;
   left: 0;

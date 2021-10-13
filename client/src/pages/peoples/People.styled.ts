@@ -4,6 +4,7 @@ export const StyledPeople = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 61px;
 `;
 
 export const PeopleMain = styled.div`

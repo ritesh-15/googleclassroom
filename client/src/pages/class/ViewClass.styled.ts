@@ -4,7 +4,8 @@ export const StyledClass = styled.div`
   width: 95%;
   margin: 0 auto;
   max-width: 1000px;
-  margin-top: 2rem;
+  margin-top: 61px;
+  padding-top: 2rem;
 `;
 
 interface imageProps {

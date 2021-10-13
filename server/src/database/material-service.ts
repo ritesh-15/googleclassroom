@@ -19,6 +19,12 @@ class MaterialService {
   async getMaterials(query: any) {
     return await Material.find(query);
   }
+  async getMaterial(query: any) {
+    return await Material.findOne(query)
+      .populate("classId")
+      .populate("topic")
+      .populate("creatorId", "-password");
+  }
 }
 
 export default new MaterialService();

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const StyledClasswork = styled.div``;
+export const StyledClasswork = styled.div`
+  margin-top: 61px;
+`;
 
 export const Topics = styled.div`
   padding: 2rem 1rem;

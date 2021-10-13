@@ -217,6 +217,30 @@ class MaterialController {
 
     return res.json({ topics, found: topics.length });
   }
+
+  async viewMaterial(req: Request, res: Response) {
+    // get the the id from the query
+    const { id } = req.query;
+    // verify the id
+    if (!id) return res.status(400).json({ message: "Bad request!" });
+    // get the material with given id
+    let material;
+
+    try {
+      material = await materialService.getMaterial({ _id: id });
+    } catch (error) {
+      return res.status(500).json({ message: "database error" });
+    }
+
+    if (!material)
+      return res
+        .status(404)
+        .json({ material: null, found: false, status: 404 });
+
+    // send the responce
+
+    res.json({ material, found: true, status: 200 });
+  }
 }
 
 export default new MaterialController();

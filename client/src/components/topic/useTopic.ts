@@ -3,17 +3,19 @@ import { getMaterials } from "../../api/material/material.api";
 import SocketHelper from "../../helpers/socket/SocketHelper";
 import { ClassDetails } from "../../pages/class/useViewClass";
 import { Topic } from "../../pages/classwork/useClassWork";
+import { User } from "../../reducers/user/userSlice";
 
 export interface MaterialInterface {
   classId: ClassDetails;
   _id: string;
   title: string;
-  descriptions?: string;
+  description?: string;
   topic: Topic;
   createdAt: Date;
   type: string;
   due?: string;
   points: string;
+  creatorId: User;
 }
 
 const useTopic = (_id: string, classId: string) => {

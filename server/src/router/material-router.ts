@@ -12,4 +12,6 @@ router.get("/get-materials", userMiddleware, materialController.getMaterials);
 
 router.get("/topics", userMiddleware, materialController.topics);
 
+router.get("/material", userMiddleware, materialController.viewMaterial);
+
 export default router;

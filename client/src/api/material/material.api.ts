@@ -9,3 +9,5 @@ export const getMaterials = (classId: string, topic: string) =>
 
 export const getClassroomTopics = (classId: string) =>
   api.get(`/m/topics?classId=${classId}`);
+
+export const getMaterial = (id: string) => api.get(`/m/material?id=${id}`);
