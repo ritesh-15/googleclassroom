@@ -31,7 +31,7 @@ const Button = styled.button<props>`
   &:hover {
     background: ${({ hover, bg }) =>
       hover ? "hsl(215, 78%, 55%)" : bg || "var(--blue)"};
-    color: ${({ hoverColor }) => hoverColor || "#fff"};
+    color: ${({ hoverColor, color }) => (hoverColor ? hoverColor : color)};
   }
 
   &:disabled {

@@ -8,6 +8,7 @@ import connection from "./db";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import Emitter from "events";
+import fileRouter from "./router/file-routes";
 
 config();
 
@@ -46,6 +47,7 @@ connection();
 app.use("/api", authRoutes);
 app.use("/api", classRoutes);
 app.use("/api/m", materialRoutes);
+app.use("/api/f", fileRouter);
 
 const server = app.listen(PORT, () => console.log(`Running on port ${PORT}`));
 
